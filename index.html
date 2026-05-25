@@ -1,3 +1,41 @@
+<!--
+NOTA TÉCNICA
+
+Para este proyecto se implementó la Opción 2:
+“Control de Latencia de Inferencia y Umbral Crítico”
+y adicionalmente la Opción 3:
+“Filtro Estadístico de Estabilización”.
+
+El sistema fue mejorado para mostrar en tiempo real
+el tiempo de respuesta de la inferencia utilizando
+performance.now(), permitiendo visualizar la latencia
+del modelo en milisegundos.
+
+También se agregó un umbral mínimo de confianza del 85%.
+Cuando ninguna clase supera ese valor, la interfaz muestra
+el mensaje “Objeto no identificado” para evitar resultados
+incorrectos o inestables.
+
+Además, se implementó un buffer de 5 frames consecutivos
+para estabilizar las predicciones. En lugar de mostrar
+directamente el resultado de cada frame, el sistema analiza
+los últimos resultados y selecciona la clase predominante
+mediante voto mayoritario, logrando una experiencia más
+fluida y profesional.
+
+Funciones principales utilizadas:
+- init()
+- loop()
+- predict()
+- getMostFrequentPrediction()
+
+Selectores principales utilizados:
+- document.getElementById("latency")
+- document.getElementById("status-message")
+- document.getElementById("label-container")
+- querySelector(".label")
+- querySelector(".bar")
+-->
 <!DOCTYPE html>
 <html lang="es">
 

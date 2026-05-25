@@ -2,9 +2,6 @@ const URL = "model/";
 
 let model, webcam, labelContainer, maxPredictions;
 
-// ===============================
-// BUFFER DE ESTABILIZACIÓN
-// ===============================
 let predictionBuffer = [];
 
 const BUFFER_SIZE = 5;
@@ -63,9 +60,6 @@ async function loop() {
 
 async function predict() {
 
-    // ===============================
-    // MEDIR LATENCIA
-    // ===============================
     const startTime = performance.now();
 
     const prediction =
@@ -79,9 +73,6 @@ async function predict() {
     document.getElementById("latency").innerText =
         `Inferencia: ${latency} ms`;
 
-    // ===============================
-    // BUSCAR MEJOR PREDICCIÓN
-    // ===============================
     let bestPrediction = null;
 
     let highestProbability = 0;
@@ -98,20 +89,13 @@ async function predict() {
         }
     }
 
-    // ===============================
-    // AGREGAR AL BUFFER
-    // ===============================
     predictionBuffer.push(bestPrediction.className);
 
-    // mantener máximo 5 frames
     if (predictionBuffer.length > BUFFER_SIZE) {
 
         predictionBuffer.shift();
     }
 
-    // ===============================
-    // VOTO MAYORITARIO
-    // ===============================
     const votes = {};
 
     predictionBuffer.forEach(item => {
@@ -133,9 +117,6 @@ async function predict() {
         }
     }
 
-    // ===============================
-    // UMBRAL DE CONFIANZA
-    // ===============================
     const threshold = 0.85;
 
     if (highestProbability < threshold) {
@@ -146,16 +127,10 @@ async function predict() {
         return;
     }
 
-    // ===============================
-    // MOSTRAR RESULTADO ESTABLE
-    // ===============================
     document.getElementById("status-message")
         .innerText =
         `Detectando: ${dominantClass}`;
 
-    // ===============================
-    // ACTUALIZAR BARRAS
-    // ===============================
     for (let i = 0; i < maxPredictions; i++) {
 
         const probability =
